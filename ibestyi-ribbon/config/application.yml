@@ -1,0 +1,28 @@
+server:
+  port: 8888
+
+ibestyi-ribbon:
+  ribbon:
+    eureka:
+      enabled: false
+    listOfServers: localhost:8080,localhost:8090
+    ServerListRefreshInterval: 15000
+
+spring:
+  application:
+    name: ibestyi-ribbon
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/   #eureka-server的地址
+  instance:
+    instance-id: LAPTOP-LJE5NIQG:ibestyi-ribbon:8888
+    prefer-ip-address: true
+
+
+info:
+  app.name: ibestyi
+  company.name: www.ibestyi.top
+  build.artifactId: com.ibestyi.platform.ribbon
+  build.version: 1.0

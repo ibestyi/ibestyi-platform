@@ -1,0 +1,5 @@
+rootProject.name = 'ibestyi-platform'
+include 'ibestyi-eureka'
+include 'ibestyi-gateway'
+include 'ibestyi-ribbon'
+

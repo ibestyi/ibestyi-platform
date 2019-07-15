@@ -1,0 +1,55 @@
+description = 'ibestyi-eureka'
+group 'com.ibestyi.platform.eureka'
+
+ext {
+    springCloudVersion = 'Finchley.SR1'
+}
+
+dependencies {
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
+    // springboot
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+configurations {
+    compile.exclude module: 'spring-boot-starter-tomcat'
+}
+
+bootJar {
+    launchScript()
+}
+
+// 拷贝配置文件
+task copyConfig(type:Copy) {
+    from 'config'
+    into 'build/ibestyi-eureka/config'
+}
+
+// 拷贝启动脚本
+task copyScript(type:Copy) {
+    from 'script'
+    into 'build/ibestyi-eureka'
+}
+
+// 拷贝spring boot编译后的jar包
+task copyJar(type:Copy, dependsOn:bootJar) {
+    from 'build/libs'
+    into 'build/ibestyi-eureka'
+}
+
+// 打压缩包,发布版本
+task release(type:Zip, dependsOn:[clean, copyJar, copyConfig, copyScript]) {
+    from 'build/ibestyi-eureka'
+    archiveName 'ibestyi-eureka.zip'
+}
+
+
+
+
