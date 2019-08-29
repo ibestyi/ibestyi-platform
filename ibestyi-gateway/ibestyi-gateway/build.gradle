@@ -1,15 +1,16 @@
-description = 'ibestyi-eureka'
-group 'com.ibestyi.platform.eureka'
+description = 'ibestyi-gateway'
+group 'com.ibestyi.platform.gateway'
 
 ext {
-    springCloudVersion = 'Greenwich.SR2'
+    springCloudVersion = 'Finchley.SR1'
 }
 
 dependencies {
-    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     // springboot
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
 }
 
 dependencyManagement {
@@ -29,25 +30,25 @@ bootJar {
 // 拷贝配置文件
 task copyConfig(type:Copy) {
     from 'config'
-    into 'build/ibestyi-eureka/config'
+    into 'build/ibestyi-gateway/config'
 }
 
 // 拷贝启动脚本
 task copyScript(type:Copy) {
     from 'script'
-    into 'build/ibestyi-eureka'
+    into 'build/ibestyi-gateway'
 }
 
 // 拷贝spring boot编译后的jar包
 task copyJar(type:Copy, dependsOn:bootJar) {
     from 'build/libs'
-    into 'build/ibestyi-eureka'
+    into 'build/ibestyi-gateway'
 }
 
 // 打压缩包,发布版本
 task release(type:Zip, dependsOn:[clean, copyJar, copyConfig, copyScript]) {
-    from 'build/ibestyi-eureka'
-    archiveName 'ibestyi-eureka.zip'
+    from 'build/ibestyi-gateway'
+    archiveName 'ibestyi-gateway.zip'
 }
 
 

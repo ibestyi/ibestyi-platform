@@ -1,56 +1,50 @@
-description = 'ibestyi-gateway'
-group 'com.ibestyi.platform.gateway'
+buildscript {
+	ext {
+		springBootVersion = '2.1.6.RELEASE'
+	}
 
-ext {
-    springCloudVersion = 'Finchley.SR1'
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
 }
 
-dependencies {
-    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
-    // springboot
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+allprojects  {
+	// 定义版本描述
+	group = 'com.ibestyi.platform'
+	// 定义版本号
+	version = '1.0'
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	// 指定编译编译.java文件的jdk版本
+	sourceCompatibility = 1.8
+	// 确保class文件与targetCompatibility指定版本
+	targetCompatibility = 1.8
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		testCompile group: 'junit', name: 'junit', version: '4.12'
+	}
+
+	// 定义grade使用的版本
+	task wrapper(type:Wrapper) { gradleVersion = '5.4.1' }
+
+	// 设置编译时的编码
+	tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
+
+	// 设置Javadoc的编码
+	tasks.withType(Javadoc) { options.encoding = 'UTF-8' }
+
 }
-
-configurations {
-    compile.exclude module: 'spring-boot-starter-tomcat'
-}
-
-bootJar {
-    launchScript()
-}
-
-// 拷贝配置文件
-task copyConfig(type:Copy) {
-    from 'config'
-    into 'build/ibestyi-gateway/config'
-}
-
-// 拷贝启动脚本
-task copyScript(type:Copy) {
-    from 'script'
-    into 'build/ibestyi-gateway'
-}
-
-// 拷贝spring boot编译后的jar包
-task copyJar(type:Copy, dependsOn:bootJar) {
-    from 'build/libs'
-    into 'build/ibestyi-gateway'
-}
-
-// 打压缩包,发布版本
-task release(type:Zip, dependsOn:[clean, copyJar, copyConfig, copyScript]) {
-    from 'build/ibestyi-gateway'
-    archiveName 'ibestyi-gateway.zip'
-}
-
-
-
-

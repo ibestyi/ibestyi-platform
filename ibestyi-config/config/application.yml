@@ -1,0 +1,18 @@
+server:
+  port: 8010
+spring:
+  application:
+    name: ibestyi-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/ibestyi/ibestyi-platform.git  # 远程git仓库的地址
+          username: xuxiangke123@126.com  # 以及相应的账户名
+          password: '*xk19892009'  # 和密码
+#          basedir: E:\工作记录\工程项目\I优品·意\开发\源代码\ibestyi-platform\ibestyi-gateway  # 可以使用这个配置项来指定本地git仓库的路径
+          search-paths: /**  # 指定搜索根路径下的所有目录，若有多个路径使用逗号隔开
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

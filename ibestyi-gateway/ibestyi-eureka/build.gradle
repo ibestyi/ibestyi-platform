@@ -2,7 +2,7 @@ description = 'ibestyi-eureka'
 group 'com.ibestyi.platform.eureka'
 
 ext {
-    springCloudVersion = 'Greenwich.SR2'
+    springCloudVersion = 'Finchley.SR1'
 }
 
 dependencies {

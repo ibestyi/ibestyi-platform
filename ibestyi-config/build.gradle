@@ -1,0 +1,24 @@
+description = 'ibestyi-config'
+group 'com.ibestyi.platform.config'
+
+ext {
+    springCloudVersion = 'Greenwich.SR2'
+}
+
+dependencies {
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+    compile('org.springframework.cloud:spring-cloud-config-server')
+    // springboot
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-undertow'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+configurations {
+    compile.exclude module: 'spring-boot-starter-tomcat'
+}

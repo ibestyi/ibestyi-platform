@@ -2,7 +2,7 @@ description = 'ibestyi-ribbon'
 group 'com.ibestyi.platform.ribbon'
 
 ext {
-    springCloudVersion = 'Finchley.SR1'
+    springCloudVersion = 'Greenwich.SR2'
 }
 
 dependencies {
